@@ -1,0 +1,126 @@
+<html>
+
+<head>
+    <title>Data Mahasiswa</title>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 2px solid pink;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        input {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Form Mahasiswa</h2>
+
+    Nama: <input type="text" id="nama">
+    Kelas: <input type="text" id="kelas">
+    Alamat: <input type="text" id="alamat"><br><br>
+
+    <button onclick="tambahData()">Tambah</button>
+    <button onclick="updateData()">Update</button>
+
+    <hr>
+
+    <h2>Tabel Data Mahasiswa</h2>
+
+    <table id="table1">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Kelas</th>
+                <th>Alamat</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        let table;
+        let data = [];
+        let editIndex = -1;
+
+        $(document).ready(function() {
+            table = $('#table1').DataTable();
+        });
+
+        function render() {
+            table.clear();
+
+            for (let i = 0; i < data.length; i++) {
+                table.row.add([
+                    data[i][0],
+                    data[i][1],
+                    data[i][2],
+                    '<button onclick="pilihData(' + i + ')">Pilih</button> ' +
+                    '<button onclick="hapusData(' + i + ')">Hapus</button>'
+                ]);
+            }
+
+            table.draw();
+        }
+
+        function tambahData() {
+            let nama = document.getElementById("nama").value;
+            let kelas = document.getElementById("kelas").value;
+            let alamat = document.getElementById("alamat").value;
+
+            if (nama === "" || kelas === "" || alamat === "") {
+                alert("Isi semua!");
+                return;
+            }
+
+            data.push([nama, kelas, alamat]);
+            render();
+            resetForm();
+        }
+
+        function pilihData(i) {
+            document.getElementById("nama").value = data[i][0];
+            document.getElementById("kelas").value = data[i][1];
+            document.getElementById("alamat").value = data[i][2];
+
+            editIndex = i;
+        }
+
+        function updateData() {
+            if (editIndex === -1) {
+                alert("Pilih data dulu!");
+                return;
+            }
+
+            let nama = document.getElementById("nama").value;
+            let kelas = document.getElementById("kelas").value;
+            let alamat = document.getElementById("alamat").value;
+
+            data[editIndex] = [nama, kelas, alamat];
+
+            render();
+            resetForm();
+        }
+
+        function hapusData(i) {
+            if (confirm("hapus?")) {
+                data.splice(i, 1);
+                render();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
