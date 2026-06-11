@@ -46,6 +46,9 @@ if (isset($_POST['login'])) {
 
         <button type="submit" name="login">Login</button>
     </form>
+    <p style="margin-top: 15px; font-size: 14px;">
+        Belum punya akun? <a href="register.php" style="color: black; text-decoration: underline; font-weight: bold;">Daftar Akun Baru</a>
+    </p>
 
 </div>
 
