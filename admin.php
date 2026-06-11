@@ -74,11 +74,15 @@ ORDER BY transaksi.id DESC
 <h2>Admin Medkit</h2>
 
 <?php while($d = mysqli_fetch_assoc($data)) { ?>
+
 <a href="edit.php?id=<?= $d['id']; ?>">
     <button>Edit</button>
-    <a href="admin.php?hapus=<?= $d['id']; ?>">Hapus</a>
 </a>
 
+<a href="admin.php?hapus=<?= $d['id']; ?>"
+onclick="return confirm('Yakin ingin menghapus data?')">
+    Hapus
+</a>
 <div class="box">
 
     <b>Obat:</b> <?= $d['nama_obat']; ?><br>
